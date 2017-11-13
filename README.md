@@ -7,5 +7,5 @@ Read Windows Event Logs Under Testing
 - [ ] Clean Read Data
 - [ ] Correctly Implement eventSourceFile
 - [ ] Test for remote machines
-- [ ] Add Close Handle
+- [x] Add Close Handle
 - [ ] ...

@@ -63,4 +63,8 @@ func main() {
 	tt.SetReadFlags(EVENTLOG_SEQUENTIAL_READ | EVENTLOG_BACKWARDS_READ)
 	tt.ReadEventLog(0, 1000)
 	tt.Print(0, 1000)
+	err := tt.Close()
+	if err != nil {
+		log.Debug(err)
+	}
 }

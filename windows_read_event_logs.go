@@ -27,9 +27,10 @@ var (
 	MAX_DEFAULT_BUFFER_SIZE        = 0x10000
 )
 var (
-	modadvapi32      = windows.NewLazySystemDLL("advapi32.dll")
-	procOpenEventLog = modadvapi32.NewProc("OpenEventLogW")
-	procReadEventLog = modadvapi32.NewProc("ReadEventLogW")
+	modadvapi32       = windows.NewLazySystemDLL("advapi32.dll")
+	procOpenEventLog  = modadvapi32.NewProc("OpenEventLogW")
+	procReadEventLog  = modadvapi32.NewProc("ReadEventLogW")
+	procCloseEventLog = modadvapi32.NewProc("CloseEventLog")
 )
 
 // errnoErr returns common boxed Errno values, to prevent
@@ -51,6 +52,18 @@ func openEventLog(uncServerName *uint16, sourceName *uint16) (handle windows.Han
 	r0, _, e1 := syscall.Syscall(procOpenEventLog.Addr(), 2, uintptr(unsafe.Pointer(uncServerName)), uintptr(unsafe.Pointer(sourceName)), 0)
 	handle = windows.Handle(r0)
 	if handle == 0 {
+		if e1 != 0 {
+			err = errnoErr(e1)
+		} else {
+			err = syscall.EINVAL
+		}
+	}
+	return
+}
+
+func closeEventLog(log windows.Handle) (err error) {
+	r0, _, e1 := syscall.Syscall(procCloseEventLog.Addr(), 1, uintptr(log), 0, 0)
+	if r0 == 0 {
 		if e1 != 0 {
 			err = errnoErr(e1)
 		} else {
@@ -133,4 +146,13 @@ func (el *EventLog) Print(offset int, read int) {
 		}
 		fmt.Printf("%c", el.buffer[offset+i])
 	}
+}
+
+// Close the Log Handle
+func (el *EventLog) Close() error {
+	err := closeEventLog(el.Handle)
+	if err != nil {
+		return err
+	}
+	return nil
 }
