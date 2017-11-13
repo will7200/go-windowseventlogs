@@ -1,0 +1,39 @@
+; /* --------------------------------------------------------
+; HEADER SECTION
+;*/
+SeverityNames=(Success=0x0:STATUS_SEVERITY_SUCCESS
+               Informational=0x1:STATUS_SEVERITY_INFORMATIONAL
+               Warning=0x2:STATUS_SEVERITY_WARNING
+               Error=0x3:STATUS_SEVERITY_ERROR
+              )
+;
+;
+FacilityNames=(System=0x0:FACILITY_SYSTEM
+               Runtime=0x2:FACILITY_RUNTIME
+               Stubs=0x3:FACILITY_STUBS
+               Io=0x4:FACILITY_IO_ERROR_CODE
+              )
+;
+;/* ------------------------------------------------------------------
+; MESSAGE DEFINITION SECTION
+;*/
+
+MessageIdTypedef=WORD
+
+MessageId=0x1
+SymbolicName=CAT_1
+Language=English
+Category 1
+.
+
+MessageId=0x2
+SymbolicName=CAT_2
+Language=English
+Category 2
+.
+
+MessageId=0x3
+SymbolicName=CAT_3
+Language=English
+Category 3
+.
