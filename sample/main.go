@@ -1,4 +1,4 @@
-package windowseventlogs
+package main
 
 import (
 	"fmt"
@@ -7,6 +7,7 @@ import (
 
 	colorable "github.com/mattn/go-colorable"
 	log "github.com/sirupsen/logrus"
+	. "github.com/will7200/go-windowsEventLogs"
 	"golang.org/x/sys/windows/registry"
 	"golang.org/x/sys/windows/svc/eventlog"
 )
